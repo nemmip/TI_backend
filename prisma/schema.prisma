@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  uuid String @id @db.VarChar(36) 
+  name String
+  email String @unique()
+  password String
+  type String
+  groupUuid String? @db.VarChar(36)
+
+  savedContacts Contacts[] @relation("ContactRelation")
+  group PartyGroup? @relation(fields: [groupUuid], references: [uuid])
+  payedBills Bill[]
+}
+
+model Contacts {
+  uuid String @id() @db.VarChar(36)
+  contactUuid String 
+
+  // relations
+  contact User @relation(fields: [contactUuid], references: [uuid], name: "ContactRelation")
+}
+
+model PartyGroup {
+  uuid String @id @db.VarChar(36)
+  code String @db.VarChar(8)
+  currency String
+  group User[] 
+  groupBills Bill[]
+}
+
+model Bill {
+  uuid String @id() @db.VarChar(36)
+  name String
+  price Float
+  payedBy String @db.VarChar(36)
+  groupUuid String @db.VarChar(36)
+
+  Payer User @relation(fields: [payedBy], references: [uuid])
+  Group PartyGroup @relation(fields: [groupUuid], references: [uuid])
+}
