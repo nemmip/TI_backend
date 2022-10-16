@@ -23,10 +23,16 @@ type Query {
 type Mutation {
   createRegularUser(input: UserCreateInput!): UserBaseDataType!
   deleteAnyUser(uuid: String!): ID!
+  createLoginSession(input: AuthLoginInput!): String!
 }
 
 input UserCreateInput {
   name: String!
+  email: String!
+  password: String!
+}
+
+input AuthLoginInput {
   email: String!
   password: String!
 }

@@ -4,7 +4,7 @@ import { createHash } from 'crypto';
 const prisma = new PrismaClient();
 
 async function main() {
-  const adminPass = createHash('sha512')
+  const adminPass = createHash(process.env.HASHING_ALG)
     .update('SomeTestPass1#')
     .digest('base64');
   const admin = await prisma.user.upsert({

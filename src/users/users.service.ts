@@ -35,4 +35,14 @@ export class UsersService {
 
     return user;
   }
+
+  async getUserByEmail(email: string) {
+    const user = await this.usersDao.findUserByEmail(email);
+
+    if (!user) {
+      throw new Error(`User with email: ${email} not found!.`);
+    }
+
+    return user;
+  }
 }

@@ -23,4 +23,8 @@ export class UsersDao {
   async deleteUserByUuid(uuid: string) {
     await this.db.user.delete({ where: { uuid } });
   }
+
+  async findUserByEmail(email: string) {
+    return await this.db.user.findUnique({ where: { email } });
+  }
 }
