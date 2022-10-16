@@ -1,5 +1,9 @@
+import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { GraphQLID } from 'graphql';
+import { USER_TYPE } from 'src/commons/enums/user.enums';
+import { GqlAuthGuard } from 'src/commons/guards/gql-auth.guard';
+import { UserType } from 'src/commons/guards/user-type.gurad';
 import { UserCreateInput } from './models/users.inputs';
 import { UserBaseDataType } from './models/users.models';
 import { UsersService } from './users.service';
@@ -17,8 +21,8 @@ export class UsersResolver {
     return await this.usersService.createRegularUser(input);
   }
 
-  // TODO: add guards for admin
   @Mutation(() => GraphQLID)
+  @UserType(USER_TYPE.ADMIN)
   async deleteAnyUser(@Args('uuid') uuid: string) {
     return await this.usersService.deleteAnyUser(uuid);
   }
