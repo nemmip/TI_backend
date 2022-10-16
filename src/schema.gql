@@ -1,0 +1,32 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserBaseDataType {
+  uuid: ID!
+  email: String!
+  type: USER_TYPE!
+  groupUuid: ID
+}
+
+"""Enumeration used to specify user type."""
+enum USER_TYPE {
+  ADMIN
+  REGULAR
+  GUEST
+}
+
+type Query {
+  dumbQuery: String!
+}
+
+type Mutation {
+  createRegularUser(input: UserCreateInput!): UserBaseDataType!
+  deleteAnyUser(uuid: String!): ID!
+}
+
+input UserCreateInput {
+  name: String!
+  email: String!
+  password: String!
+}
