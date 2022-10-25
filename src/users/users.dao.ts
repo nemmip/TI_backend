@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/commons/prisma/prisma.service';
 import { UserCreateArgs } from './models/users.interfaces';
 
@@ -26,5 +27,22 @@ export class UsersDao {
 
   async findUserByEmail(email: string) {
     return await this.db.user.findUnique({ where: { email } });
+  }
+
+  findManyUsers(uuids: string[]) {
+    const users = uuids.map(
+      async (uuid) =>
+        await this.db.user.findUnique({
+          where: {
+            uuid,
+          },
+        }),
+    );
+
+    return users;
+  }
+
+  async updateUser(input: Prisma.UserUpdateArgs) {
+    return await this.db.user.update(input);
   }
 }

@@ -2,11 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Represents one single contact"""
+type Contact {
+  """Uuid of external user."""
+  uuid: ID!
+
+  """Uuid of contact head."""
+  contactUuid: ID!
+}
+
 type UserBaseDataType {
   uuid: ID!
+  name: String!
   email: String!
   type: USER_TYPE!
   groupUuid: ID
+
+  """Saved contacts for specific user"""
+  savedContacts: [Contact!]
 }
 
 """Enumeration used to specify user type."""
@@ -24,6 +37,11 @@ type Mutation {
   createRegularUser(input: UserCreateInput!): UserBaseDataType!
   deleteAnyUser(uuid: String!): ID!
   createLoginSession(input: AuthLoginInput!): String!
+
+  """Mutation used for fetching logged user contacts."""
+  contactsGetByUser: [UserBaseDataType!]!
+  contactAdd(input: String!): UserBaseDataType!
+  contactDelete(input: String!): ID!
 }
 
 input UserCreateInput {

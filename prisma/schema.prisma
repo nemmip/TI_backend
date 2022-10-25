@@ -29,6 +29,7 @@ model Contacts {
 
   // relations
   contact User @relation(fields: [contactUuid], references: [uuid], name: "ContactRelation")
+  @@unique([uuid, contactUuid])
 }
 
 model PartyGroup {

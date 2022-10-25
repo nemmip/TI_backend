@@ -3,6 +3,7 @@ import { UsersDao } from './users.dao';
 import { createHash } from 'crypto';
 import { USER_TYPE } from 'src/commons/enums/user.enums';
 import { UserCreateInput } from './models/users.inputs';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -44,5 +45,13 @@ export class UsersService {
     }
 
     return user;
+  }
+
+  findManyUsers(uuids: string[]) {
+    return this.usersDao.findManyUsers(uuids);
+  }
+
+  async updateUser(input: Prisma.UserUpdateArgs) {
+    return await this.usersDao.updateUser(input);
   }
 }

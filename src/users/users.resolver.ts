@@ -1,8 +1,6 @@
-import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { GraphQLID } from 'graphql';
 import { USER_TYPE } from 'src/commons/enums/user.enums';
-import { GqlAuthGuard } from 'src/commons/guards/gql-auth.guard';
 import { UserType } from 'src/commons/guards/user-type.gurad';
 import { UserCreateInput } from './models/users.inputs';
 import { UserBaseDataType } from './models/users.models';
