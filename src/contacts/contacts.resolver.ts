@@ -22,7 +22,7 @@ export class ContactsResolver {
   @UserType(USER_TYPE.REGULAR)
   async contactAdd(
     @User() { uuid }: UserBaseDataType,
-    @Args('input') input: string,
+    @Args('input', { description: 'Email of new contact' }) input: string,
   ) {
     return await this.concactsService.contactAdd(uuid, input);
   }

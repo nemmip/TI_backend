@@ -37,10 +37,17 @@ type Mutation {
   createRegularUser(input: UserCreateInput!): UserBaseDataType!
   deleteAnyUser(uuid: String!): ID!
   createLoginSession(input: AuthLoginInput!): String!
+  refreshLoginSession(
+    """Token to refresh"""
+    input: String!
+  ): String!
 
   """Mutation used for fetching logged user contacts."""
   contactsGetByUser: [UserBaseDataType!]!
-  contactAdd(input: String!): UserBaseDataType!
+  contactAdd(
+    """Email of new contact"""
+    input: String!
+  ): UserBaseDataType!
   contactDelete(input: String!): ID!
 }
 

@@ -1,4 +1,3 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { AuthLoginInput } from './models/auth.input';
@@ -13,5 +12,12 @@ export class AuthResolver {
       input.password,
     );
     return await this.authService.login(user);
+  }
+
+  @Mutation(() => String)
+  async refreshLoginSession(
+    @Args('input', { description: 'Token to refresh' }) input: string,
+  ) {
+    return await this.authService.refreshToken(input);
   }
 }

@@ -32,8 +32,8 @@ export class ContactsService {
     return await Promise.all(filtered);
   }
 
-  async contactAdd(contactUuid: string, uuid: string) {
-    await this.usersService.getUserByUuid(uuid);
+  async contactAdd(contactUuid: string, email: string) {
+    const newContact = await this.usersService.getUserByEmail(email);
     const user = await this.usersService.getUserByUuid(contactUuid);
 
     const updateInput: Prisma.UserUpdateArgs = {
@@ -44,12 +44,12 @@ export class ContactsService {
           connectOrCreate: {
             where: {
               uuid_contactUuid: {
-                uuid,
+                uuid: newContact.uuid,
                 contactUuid,
               },
             },
             create: {
-              uuid,
+              uuid: newContact.uuid,
             },
           },
         },
