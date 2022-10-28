@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsersDao } from './users.dao';
-import { createHash } from 'crypto';
+import { createHash, randomBytes, randomUUID } from 'crypto';
 import { USER_TYPE } from 'src/commons/enums/user.enums';
 import { UserCreateInput } from './models/users.inputs';
 import { Prisma } from '@prisma/client';
@@ -53,5 +53,15 @@ export class UsersService {
 
   async updateUser(input: Prisma.UserUpdateArgs) {
     return await this.usersDao.updateUser(input);
+  }
+
+  async createGuestUser(name: string, groupUuid: string) {
+    return await this.usersDao.createUser({
+      name,
+      email: randomUUID(),
+      password: randomUUID(),
+      type: USER_TYPE.GUEST,
+      groupUuid,
+    });
   }
 }

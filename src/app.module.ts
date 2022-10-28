@@ -5,8 +5,9 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { PartyGroupModule } from './party-group/party-group.module';
+import { BillsModule } from './bills/bills.module';
 
 @Module({
-  imports: [AppGraphQLModule, AppPrismaModule, UsersModule, AuthModule, ContactsModule, PartyGroupModule],
+  imports: [AppGraphQLModule, AppPrismaModule, UsersModule, AuthModule, ContactsModule, PartyGroupModule, BillsModule],
 })
 export class AppModule {}

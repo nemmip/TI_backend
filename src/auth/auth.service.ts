@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthenticationError } from 'apollo-server-express';
 import { createHash } from 'crypto';
+import { PartyGroupService } from 'src/party-group/party-group.service';
 import { UsersService } from '../users/users.service';
+import { GroupLoginInput } from './models/auth.input';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private partyGroupService: PartyGroupService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -38,5 +41,38 @@ export class AuthService {
       token,
     ) as any;
     return this.jwtService.sign({ uuid, name, email, type, groupUuid });
+  }
+
+  async validateGroup(input: GroupLoginInput) {
+    const group = await this.partyGroupService.findGroupByCode(input.code);
+
+    if (input.uuid) {
+      const user = await this.usersService.getUserByUuid(input.uuid);
+      const isInGroup = user.groups.find((ug) => ug.groupUuid === group.uuid);
+      if (!isInGroup) {
+        await this.usersService.updateUser({
+          where: { uuid: user.uuid },
+          data: {
+            groups: { create: { groupUuid: group.uuid } },
+          },
+        });
+      }
+      return {
+        uuid: user.uuid,
+        email: user.email,
+        type: user.type,
+        groupCode: group.code,
+      };
+    }
+    const user = await this.usersService.createGuestUser(
+      input.name,
+      input.code,
+    );
+    return {
+      uuid: user.uuid,
+      email: user.email,
+      type: user.type,
+      groupCode: group.code,
+    };
   }
 }

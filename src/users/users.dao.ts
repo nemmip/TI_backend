@@ -7,7 +7,17 @@ import { UserCreateArgs } from './models/users.interfaces';
 export class UsersDao {
   constructor(private readonly db: PrismaService) {}
   async createUser(input: UserCreateArgs) {
-    const user = await this.db.user.create({ data: { ...input } });
+    const user = await this.db.user.create({
+      data: {
+        name: input.name,
+        email: input.email,
+        password: input.password,
+        type: input.type,
+        groups: input.groupUuid
+          ? { create: { groupUuid: input.groupUuid } }
+          : undefined,
+      },
+    });
     const dbUser = {
       uuid: user.uuid,
       email: user.email,
@@ -17,7 +27,10 @@ export class UsersDao {
   }
 
   async findUserByUuid(uuid: string) {
-    return await this.db.user.findUnique({ where: { uuid } });
+    return await this.db.user.findUnique({
+      where: { uuid },
+      include: { groups: true },
+    });
   }
 
   async deleteUserByUuid(uuid: string) {

@@ -1,8 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { IsEmail, IsOptional } from 'class-validator';
 import { GraphQLID } from 'graphql';
+import { BillDataBaseType } from 'src/bills/models/bills.model';
 import { USER_TYPE } from 'src/commons/enums/user.enums';
 import { Contact } from 'src/contacts/contacts.models';
+import { PartyGroup } from 'src/party-group/models/party-group.models';
 
 @ObjectType()
 export class UserBaseDataType {
@@ -19,10 +21,6 @@ export class UserBaseDataType {
   @Field(() => USER_TYPE)
   type: USER_TYPE;
 
-  @Field(() => GraphQLID, { nullable: true })
-  @IsOptional()
-  groupUuid?: string;
-
   // TODO: add savedContacts, PartyGroup, payedBills
 
   @Field(() => [Contact], {
@@ -30,4 +28,16 @@ export class UserBaseDataType {
     nullable: true,
   })
   savedContacts?: Contact[];
+
+  @Field(() => [PartyGroup], {
+    description: 'Saved groups for specific user',
+    nullable: true,
+  })
+  groups?: PartyGroup[];
+
+  @Field(() => [BillDataBaseType], {
+    description: 'Saved bills for specific user',
+    nullable: true,
+  })
+  payedBills?: BillDataBaseType[];
 }

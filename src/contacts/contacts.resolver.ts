@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GraphQLID } from 'graphql';
 import { User } from 'src/commons/decorators/user.decorator';
 import { USER_TYPE } from 'src/commons/enums/user.enums';

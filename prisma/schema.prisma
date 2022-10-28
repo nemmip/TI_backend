@@ -41,7 +41,7 @@ model PartyGroup {
 }
 
 model PartyGroupOnUser {
-  partyGroup PartyGroup @relation(fields: [groupUuid], references: [uuid])
+  partyGroup PartyGroup @relation(fields: [groupUuid], references: [uuid], onDelete: Cascade)
   groupUuid String
   user User @relation(fields: [userUuid], references: [uuid])
   userUuid String
@@ -49,7 +49,7 @@ model PartyGroupOnUser {
 }
 
 model Bill {
-  uuid String @id() @db.VarChar(36)
+  uuid String @id() @db.VarChar(36) @default(uuid())
   name String
   price Float
   payedBy String @db.VarChar(36)

@@ -2,6 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type BillDataBaseType {
+  uuid: ID!
+  name: String!
+  price: Float!
+  payedBy: ID!
+  groupUuid: ID!
+}
+
 """Represents one single contact"""
 type Contact {
   """Uuid of external user."""
@@ -9,24 +17,6 @@ type Contact {
 
   """Uuid of contact head."""
   contactUuid: ID!
-}
-
-type UserBaseDataType {
-  uuid: ID!
-  name: String!
-  email: String!
-  type: USER_TYPE!
-  groupUuid: ID
-
-  """Saved contacts for specific user"""
-  savedContacts: [Contact!]
-}
-
-"""Enumeration used to specify user type."""
-enum USER_TYPE {
-  ADMIN
-  REGULAR
-  GUEST
 }
 
 """Represents database type of party group."""
@@ -164,8 +154,33 @@ enum CURRENCY {
   ZWD
 }
 
+type UserBaseDataType {
+  uuid: ID!
+  name: String!
+  email: String!
+  type: USER_TYPE!
+
+  """Saved contacts for specific user"""
+  savedContacts: [Contact!]
+
+  """Saved groups for specific user"""
+  groups: [PartyGroup!]
+
+  """Saved bills for specific user"""
+  payedBills: [BillDataBaseType!]
+}
+
+"""Enumeration used to specify user type."""
+enum USER_TYPE {
+  ADMIN
+  REGULAR
+  GUEST
+}
+
 type Query {
   dumbQuery: String!
+  me: UserBaseDataType!
+  partyGroupDetails: PartyGroup!
 }
 
 type Mutation {
@@ -176,6 +191,18 @@ type Mutation {
     """Token to refresh"""
     input: String!
   ): String!
+  createGroupSession(input: GroupLoginInput!): String!
+  partyGroupCreate(input: PartyGroupCreateInput!): PartyGroup!
+  partyGroupGetForUser: [PartyGroup!]!
+  partyGroupDelete(
+    """Uuid of group to delete"""
+    input: String!
+  ): ID!
+  partyGroupMembers: [UserBaseDataType!]!
+  partGroupAddUser(
+    """Uuid of user to add"""
+    input: String!
+  ): UserBaseDataType!
 
   """Mutation used for fetching logged user contacts."""
   contactsGetByUser: [UserBaseDataType!]!
@@ -184,7 +211,7 @@ type Mutation {
     input: String!
   ): UserBaseDataType!
   contactDelete(input: String!): ID!
-  partyGroupCreate(input: PartyGroupCreateInput!): PartyGroup!
+  billCreate(input: BillCreateInput!): BillDataBaseType!
 }
 
 input UserCreateInput {
@@ -198,6 +225,17 @@ input AuthLoginInput {
   password: String!
 }
 
+input GroupLoginInput {
+  """Uuid of user to join, might be null"""
+  uuid: ID
+
+  """Name of user to join group"""
+  name: String!
+
+  """Code of group to join"""
+  code: String!
+}
+
 """Input for creating party group"""
 input PartyGroupCreateInput {
   """Name of created group"""
@@ -205,4 +243,9 @@ input PartyGroupCreateInput {
 
   """Currency used in created group"""
   currency: CURRENCY!
+}
+
+input BillCreateInput {
+  name: String!
+  price: Float!
 }

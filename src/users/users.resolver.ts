@@ -1,5 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { GraphQLID } from 'graphql';
+import { User } from 'src/commons/decorators/user.decorator';
 import { USER_TYPE } from 'src/commons/enums/user.enums';
 import { UserType } from 'src/commons/guards/user-type.gurad';
 import { UserCreateInput } from './models/users.inputs';
@@ -23,5 +24,11 @@ export class UsersResolver {
   @UserType(USER_TYPE.ADMIN)
   async deleteAnyUser(@Args('uuid') uuid: string) {
     return await this.usersService.deleteAnyUser(uuid);
+  }
+
+  @Query(() => UserBaseDataType)
+  @UserType(USER_TYPE.REGULAR)
+  async me(@User() { uuid }: UserBaseDataType) {
+    return await this.usersService.getUserByUuid(uuid);
   }
 }
