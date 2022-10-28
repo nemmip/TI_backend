@@ -16,10 +16,9 @@ model User {
   email String @unique()
   password String
   type String
-  groupUuid String? @db.VarChar(36)
 
   savedContacts Contacts[] @relation("ContactRelation")
-  group PartyGroup? @relation(fields: [groupUuid], references: [uuid])
+  groups PartyGroupOnUser[]
   payedBills Bill[]
 }
 
@@ -33,11 +32,20 @@ model Contacts {
 }
 
 model PartyGroup {
-  uuid String @id @db.VarChar(36)
-  code String @db.VarChar(8)
+  uuid String @id @db.VarChar(36) @default(uuid())
+  name String
+  code String @db.VarChar(8) @unique
   currency String
-  group User[] 
+  group PartyGroupOnUser[] 
   groupBills Bill[]
+}
+
+model PartyGroupOnUser {
+  partyGroup PartyGroup @relation(fields: [groupUuid], references: [uuid])
+  groupUuid String
+  user User @relation(fields: [userUuid], references: [uuid])
+  userUuid String
+  @@id([groupUuid, userUuid])
 }
 
 model Bill {

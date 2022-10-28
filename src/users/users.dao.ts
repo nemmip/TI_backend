@@ -12,7 +12,6 @@ export class UsersDao {
       uuid: user.uuid,
       email: user.email,
       type: user.type,
-      groupUuid: user.groupUuid,
     };
     return dbUser;
   }

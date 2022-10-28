@@ -29,6 +29,141 @@ enum USER_TYPE {
   GUEST
 }
 
+"""Represents database type of party group."""
+type PartyGroup {
+  """Uuid of created group"""
+  uuid: ID!
+
+  """Name of the party group"""
+  name: String!
+
+  """Invitation code of group"""
+  code: String!
+
+  """Currency used in party group"""
+  currency: CURRENCY!
+}
+
+"""Enumeration used to specify currencies."""
+enum CURRENCY {
+  ALL
+  DZD
+  AOA
+  ARS
+  AMD
+  AUD
+  AZN
+  BHD
+  BBD
+  BYN
+  BMD
+  BOB
+  BAM
+  BWP
+  BRL
+  BGN
+  CVE
+  KHR
+  XAF
+  CAD
+  KYD
+  CLP
+  CNY
+  COP
+  CDF
+  CRC
+  HRK
+  CZK
+  DKK
+  DOP
+  USD
+  EGP
+  FJD
+  GEL
+  GHS
+  GIP
+  GTQ
+  GBP
+  GYD
+  HNL
+  HKD
+  HUF
+  ISK
+  INR
+  IDR
+  IQD
+  IMP
+  ILS
+  JMD
+  JPY
+  JOD
+  KZT
+  KES
+  KRW
+  KWD
+  KGS
+  LAK
+  EUR
+  LBP
+  LYD
+  CHF
+  MOP
+  MGA
+  MWK
+  MYR
+  MVR
+  MRU
+  MUR
+  MXN
+  MDL
+  MNT
+  MAD
+  MZN
+  MMK
+  NAD
+  NZD
+  NIO
+  NGN
+  MKD
+  NOK
+  OMR
+  PKR
+  PGK
+  PYG
+  PEN
+  PHP
+  PLN
+  QAR
+  RON
+  RUB
+  RWF
+  XCD
+  SAR
+  RSD
+  SGD
+  ZAR
+  LKR
+  SZL
+  SEK
+  TWD
+  TJS
+  TZS
+  THB
+  TTD
+  TND
+  TRY
+  TMT
+  UGX
+  UAH
+  AED
+  UYU
+  UZS
+  VEF
+  VND
+  ZMW
+  ZWD
+}
+
 type Query {
   dumbQuery: String!
 }
@@ -49,6 +184,7 @@ type Mutation {
     input: String!
   ): UserBaseDataType!
   contactDelete(input: String!): ID!
+  partyGroupCreate(input: PartyGroupCreateInput!): PartyGroup!
 }
 
 input UserCreateInput {
@@ -60,4 +196,13 @@ input UserCreateInput {
 input AuthLoginInput {
   email: String!
   password: String!
+}
+
+"""Input for creating party group"""
+input PartyGroupCreateInput {
+  """Name of created group"""
+  name: String!
+
+  """Currency used in created group"""
+  currency: CURRENCY!
 }
