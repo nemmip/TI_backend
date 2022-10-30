@@ -1,11 +1,11 @@
-import { Module } from "@nestjs/common"
-import { PassportModule } from "@nestjs/passport"
-import { UsersModule } from "src/users/users.module"
-import { AuthService } from "./auth.service"
-import { AuthResolver } from "./auth.resolver"
-import { JwtModule } from "@nestjs/jwt"
-import { JwtStrategy } from "./jwt.strategy"
-import { PartyGroupModule } from "src/party-group/party-group.module"
+import { Module } from '@nestjs/common'
+import { PassportModule } from '@nestjs/passport'
+import { UsersModule } from 'src/users/users.module'
+import { AuthService } from './auth.service'
+import { AuthResolver } from './auth.resolver'
+import { JwtModule } from '@nestjs/jwt'
+import { JwtStrategy } from './jwt.strategy'
+import { PartyGroupModule } from 'src/party-group/party-group.module'
 
 @Module({
 	imports: [
@@ -13,7 +13,7 @@ import { PartyGroupModule } from "src/party-group/party-group.module"
 		PassportModule,
 		JwtModule.register({
 			secret: process.env.SECRET,
-			signOptions: { expiresIn: "30m" },
+			signOptions: { expiresIn: '30m' },
 		}),
 		PartyGroupModule,
 	],

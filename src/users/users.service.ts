@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common"
-import { UsersDao } from "./users.dao"
-import { createHash, randomUUID } from "crypto"
-import { USER_TYPE } from "src/commons/enums/user.enums"
-import { UserCreateInput } from "./models/users.inputs"
-import { Prisma } from "@prisma/client"
+import { Injectable } from '@nestjs/common'
+import { UsersDao } from './users.dao'
+import { createHash, randomUUID } from 'crypto'
+import { USER_TYPE } from 'src/commons/enums/user.enums'
+import { UserCreateInput } from './models/users.inputs'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class UsersService {
@@ -12,7 +12,7 @@ export class UsersService {
 	async createRegularUser(input: UserCreateInput) {
 		const hash = createHash(process.env.HASHING_ALG)
 			.update(input.password)
-			.digest("base64")
+			.digest('base64')
 
 		return await this.usersDao.createUser({
 			...input,

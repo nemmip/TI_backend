@@ -1,9 +1,9 @@
-import { Injectable, Logger } from "@nestjs/common"
-import { Prisma } from "@prisma/client"
-import { UsersService } from "src/users/users.service"
-import { ContactsDao } from "./contacts.dao"
+import { Injectable, Logger } from '@nestjs/common'
+import { Prisma } from '@prisma/client'
+import { UsersService } from 'src/users/users.service'
+import { ContactsDao } from './contacts.dao'
 
-const logger = new Logger("ContactsService")
+const logger = new Logger('ContactsService')
 @Injectable()
 export class ContactsService {
 	constructor(

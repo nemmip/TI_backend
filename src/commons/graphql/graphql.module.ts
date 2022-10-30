@@ -1,7 +1,7 @@
-import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo"
-import { Module } from "@nestjs/common"
-import { GraphQLModule } from "@nestjs/graphql"
-import { GraphQlConfigService } from "./graphql.config"
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
+import { Module } from '@nestjs/common'
+import { GraphQLModule } from '@nestjs/graphql'
+import { GraphQlConfigService } from './graphql.config'
 
 @Module({
 	imports: [

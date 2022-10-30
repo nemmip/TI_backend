@@ -1,7 +1,7 @@
-import { Test, TestingModule } from "@nestjs/testing"
-import { PartyGroupService } from "./party-group.service"
+import { Test, TestingModule } from '@nestjs/testing'
+import { PartyGroupService } from './party-group.service'
 
-describe("PartyGroupService", () => {
+describe('PartyGroupService', () => {
 	let service: PartyGroupService
 
 	beforeEach(async () => {
@@ -12,7 +12,7 @@ describe("PartyGroupService", () => {
 		service = module.get<PartyGroupService>(PartyGroupService)
 	})
 
-	it("should be defined", () => {
+	it('should be defined', () => {
 		expect(service).toBeDefined()
 	})
 })

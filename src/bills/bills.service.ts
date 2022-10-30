@@ -1,7 +1,7 @@
-import { forwardRef, Inject, Injectable } from "@nestjs/common"
-import { PartyGroupService } from "src/party-group/party-group.service"
-import { BillsDao } from "./bills.dao"
-import { BillCreateInput } from "./models/bills.input"
+import { forwardRef, Inject, Injectable } from '@nestjs/common'
+import { PartyGroupService } from 'src/party-group/party-group.service'
+import { BillsDao } from './bills.dao'
+import { BillCreateInput } from './models/bills.input'
 
 @Injectable()
 export class BillsService {

@@ -1,5 +1,5 @@
-import { Field, Float, ObjectType } from "@nestjs/graphql"
-import { GraphQLID } from "graphql"
+import { Field, Float, ObjectType } from '@nestjs/graphql'
+import { GraphQLID } from 'graphql'
 
 @ObjectType()
 export class BillDataBaseType {

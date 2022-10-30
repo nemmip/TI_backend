@@ -1,7 +1,7 @@
-import { Test, TestingModule } from "@nestjs/testing"
-import { PartyGroupResolver } from "./party-group.resolver"
+import { Test, TestingModule } from '@nestjs/testing'
+import { PartyGroupResolver } from './party-group.resolver'
 
-describe("PartyGroupResolver", () => {
+describe('PartyGroupResolver', () => {
 	let resolver: PartyGroupResolver
 
 	beforeEach(async () => {
@@ -12,7 +12,7 @@ describe("PartyGroupResolver", () => {
 		resolver = module.get<PartyGroupResolver>(PartyGroupResolver)
 	})
 
-	it("should be defined", () => {
+	it('should be defined', () => {
 		expect(resolver).toBeDefined()
 	})
 })

@@ -1,7 +1,7 @@
-import { Test, TestingModule } from "@nestjs/testing"
-import { BillsResolver } from "./bills.resolver"
+import { Test, TestingModule } from '@nestjs/testing'
+import { BillsResolver } from './bills.resolver'
 
-describe("BillsResolver", () => {
+describe('BillsResolver', () => {
 	let resolver: BillsResolver
 
 	beforeEach(async () => {
@@ -12,7 +12,7 @@ describe("BillsResolver", () => {
 		resolver = module.get<BillsResolver>(BillsResolver)
 	})
 
-	it("should be defined", () => {
+	it('should be defined', () => {
 		expect(resolver).toBeDefined()
 	})
 })

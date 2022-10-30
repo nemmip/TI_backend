@@ -4,7 +4,7 @@ import {
 	ValidationArguments,
 	registerDecorator,
 	ValidationOptions,
-} from "class-validator"
+} from 'class-validator'
 
 @ValidatorConstraint({ async: true })
 export class IsStrongPasswordConstraint

@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common"
-import { PartyGroupDao } from "./party-group.dao"
-import { PartyGroupCreateInput } from "./models/party-group.input"
-import { UserInputError } from "apollo-server-express"
-import { BillsService } from "src/bills/bills.service"
+import { Injectable } from '@nestjs/common'
+import { PartyGroupDao } from './party-group.dao'
+import { PartyGroupCreateInput } from './models/party-group.input'
+import { UserInputError } from 'apollo-server-express'
+import { BillsService } from 'src/bills/bills.service'
 
 @Injectable()
 export class PartyGroupService {

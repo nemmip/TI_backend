@@ -1,10 +1,10 @@
-import { Injectable } from "@nestjs/common"
-import { JwtService } from "@nestjs/jwt"
-import { AuthenticationError } from "apollo-server-express"
-import { createHash } from "crypto"
-import { PartyGroupService } from "src/party-group/party-group.service"
-import { UsersService } from "../users/users.service"
-import { GroupLoginInput } from "./models/auth.input"
+import { Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { AuthenticationError } from 'apollo-server-express'
+import { createHash } from 'crypto'
+import { PartyGroupService } from 'src/party-group/party-group.service'
+import { UsersService } from '../users/users.service'
+import { GroupLoginInput } from './models/auth.input'
 
 @Injectable()
 export class AuthService {
@@ -18,16 +18,17 @@ export class AuthService {
 		const user = await this.usersService.getUserByEmail(email)
 		const checkHash = await this.check(user.password, password)
 		if (user && checkHash) {
-			const { _password, ...result } = user
+			// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+			const { password, ...result } = user
 			return result
 		}
-		throw new AuthenticationError("Wrong password.")
+		throw new AuthenticationError('Wrong password.')
 	}
 
 	private async check(digest: string, plaintext: string): Promise<boolean> {
 		const hash = createHash(process.env.HASHING_ALG)
 			.update(plaintext)
-			.digest("base64")
+			.digest('base64')
 		return digest === hash
 	}
 

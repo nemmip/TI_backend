@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common"
-import { Prisma } from "@prisma/client"
-import { PrismaService } from "src/commons/prisma/prisma.service"
-import { UserCreateArgs } from "./models/users.interfaces"
+import { Injectable } from '@nestjs/common'
+import { Prisma } from '@prisma/client'
+import { PrismaService } from 'src/commons/prisma/prisma.service'
+import { UserCreateArgs } from './models/users.interfaces'
 
 @Injectable()
 export class UsersDao {

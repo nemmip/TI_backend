@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common"
-import { PrismaService } from "src/commons/prisma/prisma.service"
-import { PartyGroupCreateArgs } from "./models/party-group.interfaces"
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from 'src/commons/prisma/prisma.service'
+import { PartyGroupCreateArgs } from './models/party-group.interfaces'
 
 @Injectable()
 export class PartyGroupDao {
