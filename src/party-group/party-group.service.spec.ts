@@ -1,18 +1,18 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PartyGroupService } from './party-group.service';
+import { Test, TestingModule } from "@nestjs/testing"
+import { PartyGroupService } from "./party-group.service"
 
-describe('PartyGroupService', () => {
-  let service: PartyGroupService;
+describe("PartyGroupService", () => {
+	let service: PartyGroupService
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [PartyGroupService],
-    }).compile();
+	beforeEach(async () => {
+		const module: TestingModule = await Test.createTestingModule({
+			providers: [PartyGroupService],
+		}).compile()
 
-    service = module.get<PartyGroupService>(PartyGroupService);
-  });
+		service = module.get<PartyGroupService>(PartyGroupService)
+	})
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+	it("should be defined", () => {
+		expect(service).toBeDefined()
+	})
+})

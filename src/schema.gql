@@ -154,6 +154,21 @@ enum CURRENCY {
   ZWD
 }
 
+type BillSummary {
+  member: UserBaseDataType!
+  sumOfBills: Float!
+}
+
+type PartyGroupSummary {
+  group: PartyGroup!
+  billsSummary: [BillSummary!]!
+}
+
+type SplitSummary {
+  name: String!
+  pay: Float!
+}
+
 type UserBaseDataType {
   uuid: ID!
   name: String!
@@ -180,7 +195,8 @@ enum USER_TYPE {
 type Query {
   dumbQuery: String!
   me: UserBaseDataType!
-  partyGroupDetails: PartyGroup!
+  partyGroupSummary: PartyGroupSummary!
+  splitPartyGroup: [SplitSummary!]!
 }
 
 type Mutation {
@@ -203,6 +219,8 @@ type Mutation {
     """Uuid of user to add"""
     input: String!
   ): UserBaseDataType!
+  billCreate(input: BillCreateInput!): BillDataBaseType!
+  billGetForGroupUser: [BillDataBaseType!]!
 
   """Mutation used for fetching logged user contacts."""
   contactsGetByUser: [UserBaseDataType!]!
@@ -211,7 +229,6 @@ type Mutation {
     input: String!
   ): UserBaseDataType!
   contactDelete(input: String!): ID!
-  billCreate(input: BillCreateInput!): BillDataBaseType!
 }
 
 input UserCreateInput {

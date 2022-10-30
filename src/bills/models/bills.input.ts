@@ -1,13 +1,13 @@
-import { Field, Float, InputType } from '@nestjs/graphql';
+import { Field, Float, InputType } from "@nestjs/graphql"
 
 @InputType()
 export class BillCreateInput {
-  @Field(() => String)
-  name: string;
+	@Field(() => String)
+	name: string
 
-  @Field(() => Float)
-  price: number;
+	@Field(() => Float)
+	price: number
 
-  groupCode: string;
-  payedBy: string;
+	groupCode: string
+	payedBy: string
 }
