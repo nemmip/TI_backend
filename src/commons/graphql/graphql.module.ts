@@ -4,11 +4,11 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { GraphQlConfigService } from './graphql.config'
 
 @Module({
-	imports: [
-		GraphQLModule.forRootAsync<ApolloDriverConfig>({
-			driver: ApolloDriver,
-			useClass: GraphQlConfigService,
-		}),
-	],
+  imports: [
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      useClass: GraphQlConfigService,
+    }),
+  ],
 })
 export class AppGraphQLModule {}

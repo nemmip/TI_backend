@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql'
 import { IsEmail } from 'class-validator'
-import { IsStrongPassword } from 'src/commons/decorators/is-strong-password.decorator'
+import { IsStrongPassword } from '../../commons/decorators/is-strong-password.decorator'
 
 @InputType()
 export class UserCreateInput {

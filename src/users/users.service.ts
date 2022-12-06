@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { UsersDao } from './users.dao'
 import { createHash, randomUUID } from 'crypto'
-import { USER_TYPE } from 'src/commons/enums/user.enums'
+import { USER_TYPE } from '../commons/enums/user.enums'
 import { UserCreateInput } from './models/users.inputs'
 import { Prisma } from '@prisma/client'
 
@@ -21,17 +21,11 @@ export class UsersService {
 		})
 	}
 
-	async deleteAnyUser(uuid: string) {
-		await this.getUserByUuid(uuid)
-		await this.usersDao.deleteUserByUuid(uuid)
-		return uuid
-	}
-
 	async getUserByUuid(uuid: string) {
 		const user = await this.usersDao.findUserByUuid(uuid)
 
 		if (!user) {
-			throw new Error(`User with uuid: ${uuid} not found!.`)
+			throw new Error(`User with uuid: ${uuid} not found!`)
 		}
 
 		return user
@@ -47,8 +41,8 @@ export class UsersService {
 		return user
 	}
 
-	findManyUsers(uuids: string[]) {
-		return this.usersDao.findManyUsers(uuids)
+	async findManyUsers(uuids: string[]) {
+		return await this.usersDao.findManyUsers(uuids)
 	}
 
 	async updateUser(input: Prisma.UserUpdateArgs) {

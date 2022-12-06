@@ -3,10 +3,10 @@ import { Field, Float, InputType } from '@nestjs/graphql'
 @InputType()
 export class BillCreateInput {
 	@Field(() => String)
-	name: string
+	  name: string
 
 	@Field(() => Float)
-	price: number
+	  price: number
 
 	groupCode: string
 	payedBy: string

@@ -1,10 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 import { IsEmail } from 'class-validator'
 import { GraphQLID } from 'graphql'
-import { BillDataBaseType } from 'src/bills/models/bills.model'
-import { USER_TYPE } from 'src/commons/enums/user.enums'
-import { Contact } from 'src/contacts/contacts.models'
-import { PartyGroup } from 'src/party-group/models/party-group.models'
+import { BillDataBaseType } from '../../bills/models/bills.model'
+import { USER_TYPE } from '../../commons/enums/user.enums'
+import { Contact } from '../../contacts/contacts.models'
+import { PartyGroup } from '../../party-group/models/party-group.models'
 
 @ObjectType()
 export class UserBaseDataType {
@@ -20,8 +20,6 @@ export class UserBaseDataType {
 
 	@Field(() => USER_TYPE)
 	type: USER_TYPE
-
-	// TODO: add savedContacts, PartyGroup, payedBills
 
 	@Field(() => [Contact], {
 		description: 'Saved contacts for specific user',

@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql'
 import { IsEnum, IsNotEmpty } from 'class-validator'
-import { CURRENCY } from 'src/commons/enums/currency.enums'
+import { CURRENCY } from '../../commons/enums/currency.enums'
 
 @InputType({ description: 'Input for creating party group' })
 export class PartyGroupCreateInput {

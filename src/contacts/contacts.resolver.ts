@@ -1,9 +1,9 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { GraphQLID } from 'graphql'
-import { User } from 'src/commons/decorators/user.decorator'
-import { USER_TYPE } from 'src/commons/enums/user.enums'
-import { UserType } from 'src/commons/guards/user-type.gurad'
-import { UserBaseDataType } from 'src/users/models/users.models'
+import { User } from '../commons/decorators/user.decorator'
+import { USER_TYPE } from '../commons/enums/user.enums'
+import { UserType } from '../commons/guards/user-type.gurad'
+import { UserBaseDataType } from '../users/models/users.models'
 import { ContactsService } from './contacts.service'
 
 @Resolver()

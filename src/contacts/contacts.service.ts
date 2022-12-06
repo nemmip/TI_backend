@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
-import { UsersService } from 'src/users/users.service'
+import { UsersService } from '../users/users.service'
 import { ContactsDao } from './contacts.dao'
 
 const logger = new Logger('ContactsService')

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { AuthenticationError } from 'apollo-server-express'
 import { createHash } from 'crypto'
-import { PartyGroupService } from 'src/party-group/party-group.service'
+import { PartyGroupService } from '../party-group/party-group.service'
 import { UsersService } from '../users/users.service'
 import { GroupLoginInput } from './models/auth.input'
 

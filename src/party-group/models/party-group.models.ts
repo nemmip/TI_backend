@@ -1,7 +1,7 @@
 import { Field, Float, ObjectType } from '@nestjs/graphql'
 import { GraphQLID } from 'graphql'
-import { CURRENCY } from 'src/commons/enums/currency.enums'
-import { UserBaseDataType } from 'src/users/models/users.models'
+import { CURRENCY } from '../../commons/enums/currency.enums'
+import { UserBaseDataType } from '../../users/models/users.models'
 
 @ObjectType({ description: 'Represents database type of party group.' })
 export class PartyGroup {

@@ -6,26 +6,26 @@ import { GraphQLID } from 'graphql'
 export class AuthLoginInput {
 	@Field(() => String)
 	@IsEmail()
-	email: string
+	  email: string
 
 	@Field(() => String)
-	password: string
+	  password: string
 }
 
 @InputType()
 export class GroupLoginInput {
 	@Field(() => GraphQLID, {
-		description: 'Uuid of user to join, might be null',
-		nullable: true,
+	  description: 'Uuid of user to join, might be null',
+	  nullable: true,
 	})
 	@IsOptional()
 	@IsUUID()
-	uuid?: string
+	  uuid?: string
 
 	@Field(() => String, { description: 'Name of user to join group' })
-	name: string
+	  name: string
 
 	@Field({ description: 'Code of group to join' })
 	@Length(8, 8)
-	code: string
+	  code: string
 }

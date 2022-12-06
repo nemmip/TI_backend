@@ -261,8 +261,3 @@ input PartyGroupCreateInput {
   """Currency used in created group"""
   currency: CURRENCY!
 }
-
-input BillCreateInput {
-  name: String!
-  price: Float!
-}

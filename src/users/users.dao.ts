@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
-import { PrismaService } from 'src/commons/prisma/prisma.service'
+import { PrismaService } from '../commons/prisma/prisma.service'
 import { UserCreateArgs } from './models/users.interfaces'
 
 @Injectable()
@@ -20,6 +20,7 @@ export class UsersDao {
 		})
 		const dbUser = {
 			uuid: user.uuid,
+			name: user.name,
 			email: user.email,
 			type: user.type,
 		}
@@ -31,10 +32,6 @@ export class UsersDao {
 			where: { uuid },
 			include: { groups: true },
 		})
-	}
-
-	async deleteUserByUuid(uuid: string) {
-		await this.db.user.delete({ where: { uuid } })
 	}
 
 	async findUserByEmail(email: string) {
