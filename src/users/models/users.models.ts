@@ -9,33 +9,33 @@ import { PartyGroup } from '../../party-group/models/party-group.models'
 @ObjectType()
 export class UserBaseDataType {
 	@Field(() => GraphQLID)
-	uuid: string
+		uuid: string
 
 	@Field(() => String)
-	name: string
+		name: string
 
 	@Field(() => String)
 	@IsEmail()
-	email: string
+		email: string
 
 	@Field(() => USER_TYPE)
-	type: USER_TYPE
+		type: USER_TYPE
 
 	@Field(() => [Contact], {
 		description: 'Saved contacts for specific user',
 		nullable: true,
 	})
-	savedContacts?: Contact[]
+		savedContacts?: Contact[]
 
 	@Field(() => [PartyGroup], {
 		description: 'Saved groups for specific user',
 		nullable: true,
 	})
-	groups?: PartyGroup[]
+		groups?: PartyGroup[]
 
 	@Field(() => [BillDataBaseType], {
 		description: 'Saved bills for specific user',
 		nullable: true,
 	})
-	payedBills?: BillDataBaseType[]
+		payedBills?: BillDataBaseType[]
 }

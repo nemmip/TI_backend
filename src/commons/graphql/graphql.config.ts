@@ -5,9 +5,9 @@ import { join } from 'path'
 
 @Injectable()
 export class GraphQlConfigService implements GqlOptionsFactory {
-  createGqlOptions(): ApolloDriverConfig {
-    return {
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-    }
-  }
+	createGqlOptions(): ApolloDriverConfig {
+		return {
+			autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+		}
+	}
 }

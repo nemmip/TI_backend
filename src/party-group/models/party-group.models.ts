@@ -6,41 +6,41 @@ import { UserBaseDataType } from '../../users/models/users.models'
 @ObjectType({ description: 'Represents database type of party group.' })
 export class PartyGroup {
 	@Field(() => GraphQLID, { description: 'Uuid of created group' })
-	uuid: string
+		uuid: string
 
 	@Field(() => String, { description: 'Name of the party group' })
-	name: string
+		name: string
 
 	@Field(() => String, { description: 'Invitation code of group' })
-	code: string
+		code: string
 
 	@Field(() => CURRENCY, { description: 'Currency used in party group' })
-	currency: CURRENCY
+		currency: CURRENCY
 }
 
 @ObjectType()
 export class BillSummary {
 	@Field(() => UserBaseDataType)
-	member: UserBaseDataType
+		member: UserBaseDataType
 
 	@Field()
-	sumOfBills: number
+		sumOfBills: number
 }
 
 @ObjectType()
 export class PartyGroupSummary {
 	@Field(() => PartyGroup)
-	group: PartyGroup
+		group: PartyGroup
 
 	@Field(() => [BillSummary])
-	billsSummary: BillSummary
+		billsSummary: BillSummary
 }
 
 @ObjectType()
 export class SplitSummary {
 	@Field(() => String)
-	name: string
+		name: string
 
 	@Field(() => Float)
-	pay: number
+		pay: number
 }

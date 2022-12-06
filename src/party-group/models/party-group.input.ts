@@ -5,12 +5,12 @@ import { CURRENCY } from '../../commons/enums/currency.enums'
 @InputType({ description: 'Input for creating party group' })
 export class PartyGroupCreateInput {
 	@Field(() => String, { description: 'Name of created group' })
-	name: string
+		name: string
 
 	@Field(() => CURRENCY, { description: 'Currency used in created group' })
 	@IsEnum(CURRENCY)
 	@IsNotEmpty()
-	currency: CURRENCY
+		currency: CURRENCY
 
 	ownerUuid: string
 }

@@ -57,12 +57,12 @@ const toBase64 = (obj: any) => {
 const replaceSpecialChars = (message: string) => {
 	return message.replace(/[=+/]/g, (charToBeReplaced) => {
 		switch (charToBeReplaced) {
-			case '=':
-				return ''
-			case '+':
-				return '-'
-			case '/':
-				return '_'
+		case '=':
+			return ''
+		case '+':
+			return '-'
+		case '/':
+			return '_'
 		}
 	})
 }

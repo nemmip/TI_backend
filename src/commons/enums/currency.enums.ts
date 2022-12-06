@@ -121,6 +121,6 @@ export enum CURRENCY {
 }
 
 registerEnumType(CURRENCY, {
-  name: 'CURRENCY',
-  description: 'Enumeration used to specify currencies.',
+	name: 'CURRENCY',
+	description: 'Enumeration used to specify currencies.',
 })

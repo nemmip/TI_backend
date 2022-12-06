@@ -4,17 +4,17 @@ import { GraphQLID } from 'graphql'
 @ObjectType()
 export class BillDataBaseType {
 	@Field(() => GraphQLID)
-	  uuid: string
+		uuid: string
 
 	@Field(() => String)
-	  name: string
+		name: string
 
 	@Field(() => Float)
-	  price: number
+		price: number
 
 	@Field(() => GraphQLID)
-	  payedBy: string
+		payedBy: string
 
 	@Field(() => GraphQLID)
-	  groupUuid: string
+		groupUuid: string
 }
