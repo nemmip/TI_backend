@@ -1,9 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { UsersService } from '../users/users.service'
 import { ContactsDao } from './contacts.dao'
 
-const logger = new Logger('ContactsService')
 @Injectable()
 export class ContactsService {
 	constructor(
@@ -12,23 +11,10 @@ export class ContactsService {
 	) {}
 
 	async contactsGetByUser(uuid: string) {
-		await this.usersService.getUserByUuid(uuid)
-
-		const contacts = await this.contactsDao.contactsGetByUser(uuid)
-		const contactsUuids = contacts.map((c) => c.uuid)
-		const users = await this.usersService.findManyUsers(contactsUuids)
-
-		const filtered = users.filter(async (u, i) => {
-			if (!u) {
-				logger.warn(
-					`User with uuid: ${contactsUuids[i]} does not exist, deleting...`
-				)
-				await this.contactsDao.removeContact(uuid, contactsUuids[i])
-			}
-			return !!u
+		const user = await this.usersService.getUserByUuid(uuid, {
+			savedContacts: true,
 		})
-
-		return await Promise.all(filtered)
+		return user
 	}
 
 	async contactAdd(contactUuid: string, email: string) {

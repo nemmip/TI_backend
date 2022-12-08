@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { AuthenticationError } from 'apollo-server-express'
 import { createHash } from 'crypto'
+import { UserWithGroups } from '../users/models/users.interfaces'
 import { PartyGroupService } from '../party-group/party-group.service'
 import { UsersService } from '../users/users.service'
 import { GroupLoginInput } from './models/auth.input'
@@ -48,8 +49,10 @@ export class AuthService {
 		const group = await this.partyGroupService.findGroupByCode(input.code)
 
 		if (input.uuid) {
-			const user = await this.usersService.getUserByUuid(input.uuid)
-			const isInGroup = user.groups.find((ug) => ug.groupUuid === group.uuid)
+			const user = (await this.usersService.getUserByUuid(input.uuid, {
+				groups: true,
+			})) as UserWithGroups
+			const isInGroup = user.groups.find((ug) => ug.uuid === group.uuid)
 			if (!isInGroup) {
 				await this.usersService.updateUser({
 					where: { uuid: user.uuid },

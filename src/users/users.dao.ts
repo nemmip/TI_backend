@@ -27,10 +27,10 @@ export class UsersDao {
 		return dbUser
 	}
 
-	async findUserByUuid(uuid: string) {
+	async findUserByUuid(uuid: string, include?: Prisma.UserInclude) {
 		return await this.db.user.findUnique({
 			where: { uuid },
-			include: { groups: true },
+			include,
 		})
 	}
 
@@ -38,17 +38,18 @@ export class UsersDao {
 		return await this.db.user.findUnique({ where: { email } })
 	}
 
-	findManyUsers(uuids: string[]) {
+	async findManyUsers(uuids: string[], include?: Prisma.UserInclude) {
 		const users = uuids.map(
 			async (uuid) =>
 				await this.db.user.findUnique({
 					where: {
 						uuid,
 					},
+					include,
 				})
 		)
 
-		return users
+		return await Promise.all(users)
 	}
 
 	async updateUser(input: Prisma.UserUpdateArgs) {

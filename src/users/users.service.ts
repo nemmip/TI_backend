@@ -21,8 +21,8 @@ export class UsersService {
 		})
 	}
 
-	async getUserByUuid(uuid: string) {
-		const user = await this.usersDao.findUserByUuid(uuid)
+	async getUserByUuid(uuid: string, include?: Prisma.UserInclude) {
+		const user = await this.usersDao.findUserByUuid(uuid, include)
 
 		if (!user) {
 			throw new Error(`User with uuid: ${uuid} not found!`)
@@ -41,8 +41,8 @@ export class UsersService {
 		return user
 	}
 
-	async findManyUsers(uuids: string[]) {
-		return await this.usersDao.findManyUsers(uuids)
+	async findManyUsers(uuids: string[], include?: Prisma.UserInclude) {
+		return await this.usersDao.findManyUsers(uuids, include)
 	}
 
 	async updateUser(input: Prisma.UserUpdateArgs) {

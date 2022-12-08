@@ -193,7 +193,6 @@ enum USER_TYPE {
 }
 
 type Query {
-  dumbQuery: String!
   me: UserBaseDataType!
   partyGroupSummary: PartyGroupSummary!
   splitPartyGroup: [SplitSummary!]!
@@ -201,7 +200,6 @@ type Query {
 
 type Mutation {
   createRegularUser(input: UserCreateInput!): UserBaseDataType!
-  deleteAnyUser(uuid: String!): ID!
   createLoginSession(input: AuthLoginInput!): String!
   refreshLoginSession(
     """Token to refresh"""
@@ -214,7 +212,6 @@ type Mutation {
     """Uuid of group to delete"""
     input: String!
   ): ID!
-  partyGroupMembers: [UserBaseDataType!]!
   partGroupAddUser(
     """Uuid of user to add"""
     input: String!
@@ -223,7 +220,7 @@ type Mutation {
   billGetForGroupUser: [BillDataBaseType!]!
 
   """Mutation used for fetching logged user contacts."""
-  contactsGetByUser: [UserBaseDataType!]!
+  contactsGetByUser: UserBaseDataType!
   contactAdd(
     """Email of new contact"""
     input: String!
@@ -260,4 +257,9 @@ input PartyGroupCreateInput {
 
   """Currency used in created group"""
   currency: CURRENCY!
+}
+
+input BillCreateInput {
+  name: String!
+  price: Float!
 }

@@ -10,7 +10,7 @@ import { ContactsService } from './contacts.service'
 export class ContactsResolver {
 	constructor(private readonly concactsService: ContactsService) {}
 
-	@Mutation(() => [UserBaseDataType], {
+	@Mutation(() => UserBaseDataType, {
 		description: 'Mutation used for fetching logged user contacts.',
 	})
 	@UserType(USER_TYPE.REGULAR)
