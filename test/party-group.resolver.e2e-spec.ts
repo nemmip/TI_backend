@@ -118,7 +118,7 @@ describe('PartyGroup Resolver (e2e)', () => {
 
 	describe('partyGroupDelete', () => {
 		const mutation = `
-			mutation partyGroupDelete($input: String!){
+			mutation partyGroupDelete($input: PartyGroupDeleteInput!){
   partyGroupDelete(input: $input)
 }`
 
@@ -149,54 +149,10 @@ describe('PartyGroup Resolver (e2e)', () => {
 				where: { uuid: user.groups[0].groupUuid },
 			})
 			const header = jwtEncoder(user)
+			const input = { groupUuid: group.uuid }
 
-			await sendGqlQuery(server, mutation, { input: group.uuid }, header)
-
-			expect(
-				await db.partyGroupOnUser.count({
-					where: {
-						userUuid: user.uuid,
-					},
-				})
-			).toBe(0)
-		})
-	})
-
-	describe('partyGroupDelete', () => {
-		const mutation = `
-			mutation partyGroupDelete($input: String!){
-  partyGroupDelete(input: $input)
-}`
-
-		it('should delete party for logged user', async () => {
-			const userUuid = randomUUID()
-			const user = await db.user.create({
-				data: {
-					uuid: userUuid,
-					name: 'name',
-					email: 'test@mail.com',
-					password: 'pass',
-					type: USER_TYPE.REGULAR,
-					groups: {
-						create: {
-							partyGroup: {
-								create: {
-									name: 'group',
-									code: 'code',
-									currency: CURRENCY.PLN,
-								},
-							},
-						},
-					},
-				},
-				include: { groups: true },
-			})
-			const group = await db.partyGroup.findFirst({
-				where: { uuid: user.groups[0].groupUuid },
-			})
-			const header = jwtEncoder(user)
-
-			await sendGqlQuery(server, mutation, { input: group.uuid }, header)
+			const { body } = await sendGqlQuery(server, mutation, { input }, header)
+			console.log(body)
 
 			expect(
 				await db.partyGroupOnUser.count({
@@ -293,14 +249,13 @@ describe('PartyGroup Resolver (e2e)', () => {
 		})
 	})
 
-	describe('partGroupAddUser', () => {
-		const mutation = `mutation partGroupAddUser($input: String!){
-  partGroupAddUser(input: $input ) {
+	describe('partyGroupAddUser', () => {
+		const mutation = `mutation partyGroupAddUser($input: PartyGroupAddUserInput!){
+  partyGroupAddUser(input: $input ) {
     uuid
     name
   }
 }`
-
 		it('should add another user to logged party', async () => {
 			const userUuid = randomUUID()
 			const user = await db.user.create({
@@ -336,18 +291,16 @@ describe('PartyGroup Resolver (e2e)', () => {
 				where: { uuid: user.groups[0].groupUuid },
 			})
 			const header = jwtEncoder({ ...user, groupCode: group.code })
+			const input = {
+				userUuid: anotherUser.uuid,
+			}
 
-			const { body } = await sendGqlQuery(
-				server,
-				mutation,
-				{ input: anotherUser.uuid },
-				header
-			)
+			const { body } = await sendGqlQuery(server, mutation, { input }, header)
 			const expected = {
 				uuid: anotherUser.uuid,
 				name: anotherUser.name,
 			}
-			expect(body.data.partGroupAddUser).toMatchObject(expected)
+			expect(body.data.partyGroupAddUser).toMatchObject(expected)
 		})
 	})
 

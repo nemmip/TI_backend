@@ -5,7 +5,11 @@ import { User } from '../commons/decorators/user.decorator'
 import { USER_TYPE } from '../commons/enums/user.enums'
 import { UserType } from '../commons/guards/user-type.gurad'
 import { UserBaseDataType } from '../users/models/users.models'
-import { PartyGroupCreateInput } from './models/party-group.input'
+import {
+	PartyGroupAddUserInput,
+	PartyGroupCreateInput,
+	PartyGroupDeleteInput,
+} from './models/party-group.input'
 import {
 	PartyGroup,
 	PartyGroupSummary,
@@ -38,10 +42,10 @@ export class PartyGroupResolver {
 	@Mutation(() => GraphQLID)
 	@UserType(USER_TYPE.REGULAR)
 	async partyGroupDelete(
-		@Args('input', { description: 'Uuid of group to delete' }) input: string,
+		@Args('input') input: PartyGroupDeleteInput,
 		@User() { uuid }: UserBaseDataType
 	) {
-		return await this.partyGroupService.partyGroupDelete(input, uuid)
+		return await this.partyGroupService.partyGroupDelete(input.groupUuid, uuid)
 	}
 
 	@Query(() => PartyGroupSummary)
@@ -52,11 +56,14 @@ export class PartyGroupResolver {
 
 	@Mutation(() => UserBaseDataType)
 	@UserType(USER_TYPE.REGULAR, USER_TYPE.GUEST)
-	async partGroupAddUser(
+	async partyGroupAddUser(
 		@Group() groupCode: string,
-		@Args('input', { description: 'Uuid of user to add' }) input: string
+		@Args('input') input: PartyGroupAddUserInput
 	) {
-		return await this.partyGroupService.partyGroupAddUser(groupCode, input)
+		return await this.partyGroupService.partyGroupAddUser(
+			groupCode,
+			input.userUuid
+		)
 	}
 
 	@Query(() => [SplitSummary])

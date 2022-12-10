@@ -46,7 +46,7 @@ describe('UsersService', () => {
 			await service.getUserByUuid(input)
 
 			expect(daoMock.findUserByUuid).toBeCalledTimes(1)
-			expect(daoMock.findUserByUuid).toBeCalledWith(input)
+			expect(daoMock.findUserByUuid).toBeCalledWith(input, undefined)
 		})
 
 		describe('errors', () => {
@@ -85,7 +85,7 @@ describe('UsersService', () => {
 		it('should call dao', async () => {
 			await service.findManyUsers(input)
 			expect(daoMock.findManyUsers).toBeCalledTimes(1)
-			expect(daoMock.findManyUsers).toBeCalledWith(input)
+			expect(daoMock.findManyUsers).toBeCalledWith(input, undefined)
 		})
 	})
 

@@ -208,14 +208,8 @@ type Mutation {
   createGroupSession(input: GroupLoginInput!): String!
   partyGroupCreate(input: PartyGroupCreateInput!): PartyGroup!
   partyGroupGetForUser: [PartyGroup!]!
-  partyGroupDelete(
-    """Uuid of group to delete"""
-    input: String!
-  ): ID!
-  partGroupAddUser(
-    """Uuid of user to add"""
-    input: String!
-  ): UserBaseDataType!
+  partyGroupDelete(input: PartyGroupDeleteInput!): ID!
+  partyGroupAddUser(input: PartyGroupAddUserInput!): UserBaseDataType!
   billCreate(input: BillCreateInput!): BillDataBaseType!
   billGetForGroupUser: [BillDataBaseType!]!
 
@@ -254,6 +248,18 @@ input PartyGroupCreateInput {
 
   """Currency used in created group"""
   currency: CURRENCY!
+}
+
+"""Input for deleting party group"""
+input PartyGroupDeleteInput {
+  """Uuid of group to delete"""
+  groupUuid: String!
+}
+
+"""Input for adding user to party group"""
+input PartyGroupAddUserInput {
+  """Uuid of user to add"""
+  userUuid: String!
 }
 
 input BillCreateInput {
