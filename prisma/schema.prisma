@@ -44,7 +44,7 @@ model PartyGroup {
 model PartyGroupOnUser {
   partyGroup PartyGroup @relation(fields: [groupUuid], references: [uuid], onDelete: Cascade)
   groupUuid String
-  user User @relation(fields: [userUuid], references: [uuid])
+  user User @relation(fields: [userUuid], references: [uuid], onDelete: Cascade)
   userUuid String
   @@id([groupUuid, userUuid])
 }

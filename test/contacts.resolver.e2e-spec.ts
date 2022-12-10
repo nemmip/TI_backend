@@ -4,7 +4,6 @@ import { AppModule } from './../src/app.module'
 import { jwtEncoder, sendGqlQuery } from './utils'
 import { USER_TYPE } from '../src/commons/enums/user.enums'
 import { PrismaService } from '../src/commons/prisma/prisma.service'
-import { execSync } from 'child_process'
 
 describe('ContactsResolver (e2e)', () => {
 	let app: INestApplication
@@ -18,7 +17,6 @@ describe('ContactsResolver (e2e)', () => {
 		app = moduleFixture.createNestApplication()
 		db = moduleFixture.get<PrismaService>(PrismaService)
 		await app.init()
-		execSync('yarn migration:reset')
 		server = app.getHttpServer()
 	})
 
@@ -65,6 +63,7 @@ describe('ContactsResolver (e2e)', () => {
 			const header = jwtEncoder(user)
 
 			const { body } = await sendGqlQuery(server, mutation, undefined, header)
+
 			expect(body.data.contactsGetByUser).toMatchObject({
 				uuid: user.uuid,
 				savedContacts: [{ uuid: contactUser.uuid, contactUuid: user.uuid }],
