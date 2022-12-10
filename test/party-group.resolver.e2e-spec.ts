@@ -151,8 +151,7 @@ describe('PartyGroup Resolver (e2e)', () => {
 			const header = jwtEncoder(user)
 			const input = { groupUuid: group.uuid }
 
-			const { body } = await sendGqlQuery(server, mutation, { input }, header)
-			console.log(body)
+			await sendGqlQuery(server, mutation, { input }, header)
 
 			expect(
 				await db.partyGroupOnUser.count({
