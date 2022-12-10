@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { HttpServer, INestApplication } from '@nestjs/common'
 import { AppModule } from './../src/app.module'
-import { clearDefault, jwtEncoder, sendGqlQuery } from './utils'
+import { jwtEncoder, sendGqlQuery } from './utils'
 import { USER_TYPE } from '../src/commons/enums/user.enums'
 import { PrismaService } from '../src/commons/prisma/prisma.service'
 import { CURRENCY } from '../src/commons/enums/currency.enums'
+import { execSync } from 'child_process'
 
 describe('BillsResolver (e2e)', () => {
 	let app: INestApplication
@@ -12,19 +13,19 @@ describe('BillsResolver (e2e)', () => {
 	let db: PrismaService
 
 	beforeEach(async () => {
-		await clearDefault()
 		const moduleFixture: TestingModule = await Test.createTestingModule({
 			imports: [AppModule],
 		}).compile()
 		app = moduleFixture.createNestApplication()
 		db = moduleFixture.get<PrismaService>(PrismaService)
 		await app.init()
+		execSync('yarn migration:reset')
 		server = app.getHttpServer()
 	})
 
 	afterAll(async () => {
 		await db.$disconnect()
-		await app.close()
+		app && (await app.close())
 	})
 
 	describe('billCreate', () => {

@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { HttpServer, INestApplication } from '@nestjs/common'
 import { AppModule } from './../src/app.module'
-import { clearDefault, jwtEncoder, sendGqlQuery } from './utils'
+import { jwtEncoder, sendGqlQuery } from './utils'
 import { USER_TYPE } from '../src/commons/enums/user.enums'
 import { PrismaService } from '../src/commons/prisma/prisma.service'
+import { execSync } from 'child_process'
 
 describe('ContactsResolver (e2e)', () => {
 	let app: INestApplication
@@ -11,19 +12,19 @@ describe('ContactsResolver (e2e)', () => {
 	let db: PrismaService
 
 	beforeEach(async () => {
-		await clearDefault()
 		const moduleFixture: TestingModule = await Test.createTestingModule({
 			imports: [AppModule],
 		}).compile()
 		app = moduleFixture.createNestApplication()
 		db = moduleFixture.get<PrismaService>(PrismaService)
 		await app.init()
+		execSync('yarn migration:reset')
 		server = app.getHttpServer()
 	})
 
 	afterAll(async () => {
 		await db.$disconnect()
-		await app.close()
+		app && (await app.close())
 	})
 
 	describe('contactsGetByUser', () => {
@@ -72,7 +73,7 @@ describe('ContactsResolver (e2e)', () => {
 	})
 
 	describe('contactAdd', () => {
-		const mutation = `mutation contactAdd ($input: String!){
+		const mutation = `mutation contactAdd ($input: ContactAddInput!){
   contactAdd(input: $input) {
     uuid
     name
@@ -104,13 +105,9 @@ describe('ContactsResolver (e2e)', () => {
 				},
 			})
 			const header = jwtEncoder(user)
+			const input = { contactEmail: contactUser.email }
 
-			const { body } = await sendGqlQuery(
-				server,
-				mutation,
-				{ input: contactUser.email },
-				header
-			)
+			const { body } = await sendGqlQuery(server, mutation, { input }, header)
 			expect(body.data.contactAdd).toMatchObject({
 				uuid: user.uuid,
 				savedContacts: [{ uuid: contactUser.uuid, contactUuid: user.uuid }],
@@ -119,7 +116,7 @@ describe('ContactsResolver (e2e)', () => {
 	})
 
 	describe('contactDelete', () => {
-		const mutation = `mutation contactDeleta ($input: String!){
+		const mutation = `mutation contactDeleta ($input: ContactDeleteInput!){
   contactDelete(input: $input)
 }`
 
@@ -147,13 +144,11 @@ describe('ContactsResolver (e2e)', () => {
 				},
 			})
 			const header = jwtEncoder(user)
+			const input = {
+				contactUuid: contactUser.uuid,
+			}
+			const { body } = await sendGqlQuery(server, mutation, { input }, header)
 
-			const { body } = await sendGqlQuery(
-				server,
-				mutation,
-				{ input: contactUser.uuid },
-				header
-			)
 			expect(body.data.contactDelete).toBe(contactUser.uuid)
 		})
 	})

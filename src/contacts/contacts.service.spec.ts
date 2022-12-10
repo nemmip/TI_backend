@@ -24,9 +24,6 @@ describe('ContactsService', () => {
 
 	describe('contactsGetByUser', () => {
 		it('should call dao and users service', async () => {
-			daoMock.contactsGetByUser.mockImplementationOnce(() => [
-				{ uuid: 'uuid', contactUuid: 'contactUuid' },
-			])
 			usersServiceMock.findManyUsers.mockImplementationOnce(() => [
 				{ uuid: 'uuid' } as User,
 			])
@@ -34,9 +31,9 @@ describe('ContactsService', () => {
 			await service.contactsGetByUser('userUuid')
 
 			expect(usersServiceMock.getUserByUuid).toBeCalledTimes(1)
-			expect(usersServiceMock.getUserByUuid).toBeCalledWith('userUuid')
-			expect(daoMock.contactsGetByUser).toBeCalledTimes(1)
-			expect(daoMock.contactsGetByUser).toBeCalledWith('userUuid')
+			expect(usersServiceMock.getUserByUuid).toBeCalledWith('userUuid', {
+				savedContacts: true,
+			})
 		})
 	})
 	describe('contactAdd', () => {
@@ -72,35 +69,16 @@ describe('ContactsService', () => {
 	})
 
 	describe('contactDelete', () => {
-		it('should call users service', async () => {
-			usersServiceMock.getUserByUuid.mockImplementationOnce(() => ({
-				uuid: 'contactUuid',
-			}))
-
+		it('should call dao', async () => {
 			await service.contactDelete('contactUuid', 'uuid')
 
-			expect(usersServiceMock.updateUser).toBeCalledTimes(1)
-			expect(usersServiceMock.updateUser).toBeCalledWith({
-				where: { uuid: 'contactUuid' },
-				data: {
-					uuid: 'contactUuid',
-					savedContacts: {
-						delete: {
-							uuid_contactUuid: {
-								contactUuid: 'contactUuid',
-								uuid: 'uuid',
-							},
-						},
-					},
-					groups: undefined,
-				},
-				include: { savedContacts: true },
-			})
+			expect(daoMock.removeContact).toBeCalledTimes(1)
+			expect(daoMock.removeContact).toBeCalledWith('contactUuid', 'uuid')
 		})
 	})
 
 	const daoMock = {
-		contactsGetByUser: jest.fn(),
+		removeContact: jest.fn(),
 	}
 	const usersServiceMock = {
 		getUserByUuid: jest.fn(),

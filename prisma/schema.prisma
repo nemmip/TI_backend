@@ -23,11 +23,12 @@ model User {
 }
 
 model Contacts {
-  uuid String @id() @db.VarChar(36)
-  contactUuid String 
+  relationUuid String @id() @default(uuid())
+  uuid String? @db.VarChar(36)
+  contactUuid String? @db.VarChar(36)
 
   // relations
-  contact User @relation(fields: [contactUuid], references: [uuid], name: "ContactRelation")
+  contact User? @relation(fields: [contactUuid], references: [uuid], name: "ContactRelation")
   @@unique([uuid, contactUuid])
 }
 

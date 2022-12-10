@@ -18,7 +18,7 @@ export class ContactsService {
 	}
 
 	async contactAdd(contactUuid: string, email: string) {
-		const newContact = await this.usersService.getUserByEmail(email)
+		const { uuid } = await this.usersService.getUserByEmail(email)
 		const user = await this.usersService.getUserByUuid(contactUuid)
 
 		const updateInput: Prisma.UserUpdateArgs = {
@@ -27,37 +27,19 @@ export class ContactsService {
 				...user,
 				savedContacts: {
 					create: {
-						uuid: newContact.uuid,
+						uuid,
 					},
 				},
 				groups: undefined,
+				payedBills: undefined,
 			},
 			include: { savedContacts: true },
 		}
 		return await this.usersService.updateUser(updateInput)
 	}
 
-	async contactDelete(contactUuid: string, uuid: string) {
-		const user = await this.usersService.getUserByUuid(contactUuid)
-
-		const updateInput: Prisma.UserUpdateArgs = {
-			where: { uuid: contactUuid },
-			data: {
-				...user,
-				savedContacts: {
-					delete: {
-						uuid_contactUuid: {
-							contactUuid,
-							uuid,
-						},
-					},
-				},
-				groups: undefined,
-			},
-			include: { savedContacts: true },
-		}
-
-		await this.usersService.updateUser(updateInput)
-		return uuid
+	async contactDelete(userUuid: string, uuidToDelete: string) {
+		await this.contactsDao.removeContact(userUuid, uuidToDelete)
+		return uuidToDelete
 	}
 }

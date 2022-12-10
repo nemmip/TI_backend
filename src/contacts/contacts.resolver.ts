@@ -4,6 +4,7 @@ import { User } from '../commons/decorators/user.decorator'
 import { USER_TYPE } from '../commons/enums/user.enums'
 import { UserType } from '../commons/guards/user-type.gurad'
 import { UserBaseDataType } from '../users/models/users.models'
+import { ContactAddInput, ContactDeleteInput } from './contacts.input'
 import { ContactsService } from './contacts.service'
 
 @Resolver()
@@ -22,17 +23,17 @@ export class ContactsResolver {
 	@UserType(USER_TYPE.REGULAR)
 	async contactAdd(
 		@User() { uuid }: UserBaseDataType,
-		@Args('input', { description: 'Email of new contact' }) input: string
+		@Args('input') input: ContactAddInput
 	) {
-		return await this.concactsService.contactAdd(uuid, input)
+		return await this.concactsService.contactAdd(uuid, input.contactEmail)
 	}
 
 	@Mutation(() => GraphQLID)
 	@UserType(USER_TYPE.REGULAR)
 	async contactDelete(
 		@User() { uuid }: UserBaseDataType,
-		@Args('input') input: string
+		@Args('input') input: ContactDeleteInput
 	) {
-		return await this.concactsService.contactDelete(uuid, input)
+		return await this.concactsService.contactDelete(uuid, input.contactUuid)
 	}
 }

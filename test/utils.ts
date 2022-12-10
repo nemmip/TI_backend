@@ -2,8 +2,6 @@ import { HttpServer } from '@nestjs/common'
 import { createHmac } from 'crypto'
 import { DocumentNode } from 'graphql'
 import * as request from 'supertest'
-import * as util from 'util'
-import { exec } from 'child_process'
 
 export const sendGqlMutation = (
 	server: HttpServer,
@@ -74,7 +72,5 @@ const createSignature = (jwtB64Header, jwtB64Payload, secret) => {
 	return replaceSpecialChars(signature)
 }
 
-const execPromisify = util.promisify(exec)
-
-export const clearDefault = async () =>
-	execPromisify('npx prisma migrate reset --force --skip-seed')
+export const DATABASE_URL =
+	'postgresql://username:password@localhost:5432/testdb'

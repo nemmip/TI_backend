@@ -221,11 +221,8 @@ type Mutation {
 
   """Mutation used for fetching logged user contacts."""
   contactsGetByUser: UserBaseDataType!
-  contactAdd(
-    """Email of new contact"""
-    input: String!
-  ): UserBaseDataType!
-  contactDelete(input: String!): ID!
+  contactAdd(input: ContactAddInput!): UserBaseDataType!
+  contactDelete(input: ContactDeleteInput!): ID!
 }
 
 input UserCreateInput {
@@ -262,4 +259,14 @@ input PartyGroupCreateInput {
 input BillCreateInput {
   name: String!
   price: Float!
+}
+
+input ContactAddInput {
+  """Email of new contact to add."""
+  contactEmail: String!
+}
+
+input ContactDeleteInput {
+  """Uuid of contact to delete"""
+  contactUuid: String!
 }

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { HttpServer, INestApplication } from '@nestjs/common'
 import { AppModule } from '../src/app.module'
-import { clearDefault, jwtEncoder, sendGqlQuery } from './utils'
+import { jwtEncoder, sendGqlQuery } from './utils'
 import { USER_TYPE } from '../src/commons/enums/user.enums'
 import { PrismaService } from '../src/commons/prisma/prisma.service'
 import { randomUUID } from 'crypto'
@@ -13,7 +13,6 @@ describe('PartyGroup Resolver (e2e)', () => {
 	let db: PrismaService
 
 	beforeEach(async () => {
-		await clearDefault()
 		const moduleFixture: TestingModule = await Test.createTestingModule({
 			imports: [AppModule],
 		}).compile()
@@ -25,7 +24,7 @@ describe('PartyGroup Resolver (e2e)', () => {
 
 	afterAll(async () => {
 		await db.$disconnect()
-		await app.close()
+		app && (await app.close())
 	})
 
 	describe('partyGroupCreate', () => {
