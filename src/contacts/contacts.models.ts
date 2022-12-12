@@ -8,4 +8,7 @@ export class Contact {
 
 	@Field(() => GraphQLID, { description: 'Uuid of contact head.' })
 		contactUuid: string
+
+	@Field(() => String, { description: 'Name of contact head.', nullable: true })
+		name?: string
 }

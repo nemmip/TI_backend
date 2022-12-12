@@ -17,6 +17,9 @@ type Contact {
 
   """Uuid of contact head."""
   contactUuid: ID!
+
+  """Name of contact head."""
+  name: String
 }
 
 """Represents database type of party group."""

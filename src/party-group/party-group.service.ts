@@ -27,7 +27,7 @@ export class PartyGroupService {
 	}
 
 	async findGroupByCode(code: string) {
-		const group = this.dao.findGroupByCode(code)
+		const group = await this.dao.findGroupByCode(code)
 		if (group) {
 			return group
 		}
