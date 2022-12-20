@@ -6,9 +6,11 @@ import { AuthResolver } from './auth.resolver'
 import { JwtModule } from '@nestjs/jwt'
 import { JwtStrategy } from './jwt.strategy'
 import { PartyGroupModule } from '../party-group/party-group.module'
+import { LoggerModule } from 'src/logger/logger.module'
 
 @Module({
 	imports: [
+		LoggerModule,
 		UsersModule,
 		PassportModule,
 		JwtModule.register({

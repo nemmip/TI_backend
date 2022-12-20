@@ -6,6 +6,8 @@ import { AuthModule } from './auth/auth.module'
 import { ContactsModule } from './contacts/contacts.module'
 import { PartyGroupModule } from './party-group/party-group.module'
 import { BillsModule } from './bills/bills.module'
+import { LoggerModule } from './logger/logger.module';
+import { PrintModule } from './print/print.module';
 
 @Module({
 	imports: [
@@ -16,6 +18,8 @@ import { BillsModule } from './bills/bills.module'
 		ContactsModule,
 		PartyGroupModule,
 		BillsModule,
+		LoggerModule,
+		PrintModule,
 	],
 })
 export class AppModule {}

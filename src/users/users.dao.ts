@@ -55,4 +55,8 @@ export class UsersDao {
 	async updateUser(input: Prisma.UserUpdateArgs) {
 		return await this.db.user.update(input)
 	}
+
+	async deleteUser(uuid: string) {
+		return await this.db.user.delete({ where: { uuid } })
+	}
 }

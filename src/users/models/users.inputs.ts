@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql'
 import { IsEmail } from 'class-validator'
+import { IsExistingByUuid } from 'src/commons/validators/is-existing-by-uuid.validator'
 import { IsStrongPassword } from '../../commons/decorators/is-strong-password.decorator'
 
 @InputType()
@@ -18,4 +19,11 @@ export class UserCreateInput {
 			'at least one lowercase and uppercase letter, one special character and one digit.',
 	})
 		password: string
+}
+
+@InputType()
+export class UserDeleteInput {
+	@Field(() => String)
+	@IsExistingByUuid()
+		uuid: string
 }

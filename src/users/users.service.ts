@@ -58,4 +58,9 @@ export class UsersService {
 			groupUuid,
 		})
 	}
+
+	async deleteUser(uuid: string) {
+		await this.usersDao.deleteUser(uuid)
+		return uuid
+	}
 }

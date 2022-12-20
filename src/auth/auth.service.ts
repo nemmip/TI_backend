@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { AuthenticationError } from 'apollo-server-express'
 import { createHash } from 'crypto'
+import { LoggerService } from '../logger/logger.service'
 import { PartyGroupService } from '../party-group/party-group.service'
 import { UsersService } from '../users/users.service'
 import { GroupLoginInput } from './models/auth.input'
@@ -11,7 +12,8 @@ export class AuthService {
 	constructor(
 		private usersService: UsersService,
 		private jwtService: JwtService,
-		private partyGroupService: PartyGroupService
+		private partyGroupService: PartyGroupService,
+		private logger: LoggerService
 	) {}
 
 	async validateUser(email: string, password: string): Promise<any> {
@@ -34,6 +36,7 @@ export class AuthService {
 
 	async login(user: any) {
 		const payload = user
+		await this.logger.addLoginEntry(new Date(), payload.uuid)
 		return this.jwtService.sign(payload)
 	}
 

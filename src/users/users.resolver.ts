@@ -9,7 +9,7 @@ import {
 import { User } from '../commons/decorators/user.decorator'
 import { USER_TYPE } from '../commons/enums/user.enums'
 import { UserType } from '../commons/guards/user-type.gurad'
-import { UserCreateInput } from './models/users.inputs'
+import { UserCreateInput, UserDeleteInput } from './models/users.inputs'
 import { UserBaseDataType } from './models/users.models'
 import { UsersService } from './users.service'
 
@@ -26,6 +26,12 @@ export class UsersResolver {
 	@UserType(USER_TYPE.REGULAR)
 	async me(@User() { uuid }: UserBaseDataType) {
 		return await this.usersService.getUserByUuid(uuid)
+	}
+
+	@Mutation(() => String)
+	@UserType(USER_TYPE.ADMIN)
+	async deleteAnyUser(@Args('input') { uuid }: UserDeleteInput) {
+		return await this.usersService.deleteUser(uuid)
 	}
 
 	@ResolveField()
